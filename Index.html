@@ -129,7 +129,6 @@
     <main class="max-w-7xl mx-auto px-4 py-12 space-y-32">
 
         <!-- Clay Products Section -->
-        <!-- Added scroll-mt-32 ensures the title isn't hidden behind the nav when scrolling -->
         <section id="clay" class="scroll-mt-32">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-4">
                 <div>
@@ -274,20 +273,30 @@
                     Interested in a custom clay piece, a mural for your cafe, or a unique illustration? Drop a message below.
                 </p>
 
-                <form class="glass-card p-8 rounded-3xl text-left space-y-6 shadow-lg" onsubmit="event.preventDefault(); alert('This is a demo form. To make this work on GitHub Pages, you can use a service like Formspree.io!');">
+                <!-- 
+                    IMPORTANT: 
+                    1. Go to https://formspree.io/
+                    2. Create a new form and get your unique URL (e.g., https://formspree.io/f/xmqzpwkb)
+                    3. Paste that URL inside the action="" quotes below.
+                -->
+                <form 
+                    action="https://formspree.io/f/xqawkrky" 
+                    method="POST" 
+                    class="glass-card p-8 rounded-3xl text-left space-y-6 shadow-lg"
+                >
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold uppercase tracking-wider mb-2">Name</label>
-                            <input type="text" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Your Name">
+                            <input type="text" name="name" required class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Your Name">
                         </div>
                         <div>
                             <label class="block text-sm font-bold uppercase tracking-wider mb-2">Email</label>
-                            <input type="email" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="email@example.com">
+                            <input type="email" name="email" required class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="email@example.com">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-bold uppercase tracking-wider mb-2">Service Interest</label>
-                        <select class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20">
+                        <select name="service" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20">
                             <option>Clay Product</option>
                             <option>Wall Painting / Mural</option>
                             <option>Illustration</option>
@@ -297,8 +306,12 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold uppercase tracking-wider mb-2">Message</label>
-                        <textarea rows="4" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Tell me about your idea..."></textarea>
+                        <textarea name="message" rows="4" required class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Tell me about your idea..."></textarea>
                     </div>
+                    
+                    <!-- Optional: Redirect to the home page after submission -->
+                    <!-- <input type="hidden" name="_next" value="https://yourusername.github.io/jozart-portfolio/"> -->
+
                     <button type="submit" class="w-full bg-black text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-gray-900 transition-transform active:scale-95">
                         Send Inquiry
                     </button>
