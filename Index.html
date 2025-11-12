@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jozart | Art Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #000000;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* The Custom Gradient Background */
+        .custom-gradient {
+            background: linear-gradient(135deg, #b0c6ff 0%, #ffc4e6 50%, #ffe6d0 100%);
+            background-attachment: fixed; 
+        }
+
+        /* Glassmorphism Card Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        /* Nav Link Underline Animation */
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: black;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+    </style>
+</head>
+<body class="custom-gradient antialiased selection:bg-pink-200 selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 p-4" id="navbar">
+        <div class="max-w-7xl mx-auto glass-card rounded-full px-6 py-3 flex justify-between items-center">
+            <!-- Brand Name with Scroll to Top -->
+            <a href="#" class="text-2xl font-bold serif-font tracking-wide" onclick="window.scrollTo(0,0);">Jozart</a>
+            
+            <!-- Desktop Menu (Anchor Links) -->
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <a href="#clay" class="nav-link">Clay</a>
+                <a href="#paintings" class="nav-link">Paintings</a>
+                <a href="#murals" class="nav-link">Murals</a>
+                <a href="#illustration" class="nav-link">Illustration</a>
+                <a href="#fashion" class="nav-link">Fashion</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden p-2 focus:outline-none">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-20 left-4 right-4 glass-card rounded-2xl p-6 flex-col space-y-4 text-center md:hidden shadow-xl">
+            <a href="#clay" class="mobile-link text-lg font-medium">Clay Products</a>
+            <a href="#paintings" class="mobile-link text-lg font-medium">Wall Paintings</a>
+            <a href="#murals" class="mobile-link text-lg font-medium">Murals</a>
+            <a href="#illustration" class="mobile-link text-lg font-medium">Illustration</a>
+            <a href="#fashion" class="mobile-link text-lg font-medium">Fashion</a>
+            <a href="#contact" class="mobile-link text-lg font-medium">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-20">
+        <div class="max-w-3xl space-y-6">
+            <p class="uppercase tracking-[0.3em] text-sm font-semibold mb-4">Portfolio & Commission Work</p>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 serif-font">
+                Jozart
+            </h1>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                Creating art that <span class="italic font-normal serif-font">breathes</span> color. <br>
+                Clay trinkets, bespoke murals, illustrations, and fashion.
+            </p>
+            <div class="pt-8">
+                <a href="#clay" class="inline-block border border-black px-8 py-3 rounded-full text-sm uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-300">
+                    View Collections
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-12 space-y-32">
+
+        <!-- Clay Products Section -->
+        <!-- Added scroll-mt-32 ensures the title isn't hidden behind the nav when scrolling -->
+        <section id="clay" class="scroll-mt-32">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-4">
+                <div>
+                    <h2 class="text-4xl md:text-5xl mb-2">Clay Products</h2>
+                    <p class="text-sm uppercase tracking-wider opacity-70">Handmade with love</p>
+                </div>
+                <p class="mt-4 md:mt-0 max-w-md text-right md:text-left opacity-80">
+                    Functional art pieces including ashtrays, trinket holders, and bookmarks designed to add a touch of whimsy to your daily life.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-square glass-card rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop" alt="Clay Ashtray" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="text-xl font-medium serif-font">Floral Ashtray</h3>
+                        <span class="text-sm opacity-70">Custom Order</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="group cursor-pointer md:mt-12"> 
+                    <div class="aspect-[4/5] glass-card rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1616261167554-820a6852620e?q=80&w=800&auto=format&fit=crop" alt="Trinket Holder" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="text-xl font-medium serif-font">Cloud Trinket Dish</h3>
+                        <span class="text-sm opacity-70">Available</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-square glass-card rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1515464397623-73b729f75d8d?q=80&w=800&auto=format&fit=crop" alt="Clay Bookmarks" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="text-xl font-medium serif-font">Sculpted Bookmarks</h3>
+                        <span class="text-sm opacity-70">Set of 3</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wall Paintings Section -->
+        <section id="paintings" class="scroll-mt-32">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl mb-4">Wall Paintings</h2>
+                <p class="max-w-2xl mx-auto opacity-80">Transforming spaces into immersive experiences. Whether it's a small canvas on a wall or a full-scale mural.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Large Feature Image -->
+                <div class="glass-card p-2 rounded-3xl rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <img src="https://images.unsplash.com/photo-1577083288073-40892c0860a4?q=80&w=1000&auto=format&fit=crop" alt="Wall Painting" class="w-full h-[500px] object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
+                </div>
+
+                <!-- Murals Sub-Section -->
+                <div class="space-y-8" id="murals"> 
+                    <div class="glass-card p-8 rounded-2xl">
+                        <h3 class="text-2xl font-semibold mb-2 serif-font">Murals</h3>
+                        <p class="mb-4">From bedroom walls to cafe exteriors. Each mural is sketched conceptually and painted with durable, vibrant paints.</p>
+                        <ul class="list-disc list-inside space-y-1 opacity-80 text-sm">
+                            <li>Indoor & Outdoor</li>
+                            <li>Texture adaptation</li>
+                            <li>Theme consultation</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=400&auto=format&fit=crop" alt="Mural detail" class="rounded-xl w-full h-40 object-cover glass-card">
+                        <img src="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?q=80&w=400&auto=format&fit=crop" alt="Wall art detail" class="rounded-xl w-full h-40 object-cover glass-card">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Illustration Section -->
+        <section id="illustration" class="scroll-mt-32">
+            <div class="flex items-center space-x-4 mb-8">
+                <div class="h-px bg-black flex-grow opacity-20"></div>
+                <h2 class="text-4xl md:text-5xl">Illustration</h2>
+                <div class="h-px bg-black flex-grow opacity-20"></div>
+            </div>
+
+            <!-- Horizontal Scrolling Gallery -->
+            <div class="overflow-x-auto pb-8 snap-x flex space-x-6 no-scrollbar">
+                <!-- Card 1 -->
+                <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Digital Illustration">
+                        <h3 class="font-bold text-lg serif-font">Digital Portraits</h3>
+                        <p class="text-xs opacity-60 mt-1">Procreate / Photoshop</p>
+                    </div>
+                </div>
+                 <!-- Card 2 -->
+                 <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://images.unsplash.com/photo-1622542734786-43c8c9e6f874?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Ink Sketch">
+                        <h3 class="font-bold text-lg serif-font">Ink & Charcoal</h3>
+                        <p class="text-xs opacity-60 mt-1">Traditional Media</p>
+                    </div>
+                </div>
+                 <!-- Card 3 -->
+                 <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Watercolor">
+                        <h3 class="font-bold text-lg serif-font">Watercolor Scenes</h3>
+                        <p class="text-xs opacity-60 mt-1">Mixed Media</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fashion Section -->
+        <section id="fashion" class="scroll-mt-32">
+            <div class="relative rounded-3xl overflow-hidden glass-card min-h-[60vh] flex items-center">
+                <div class="absolute inset-0 z-0">
+                   <img src="https://images.unsplash.com/photo-1509631179647-0177f98920fa?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover opacity-60" alt="Fashion Background">
+                </div>
+                <div class="relative z-10 p-8 md:p-16 max-w-2xl">
+                    <span class="bg-black text-white px-3 py-1 text-xs uppercase tracking-widest rounded-full mb-4 inline-block">New Category</span>
+                    <h2 class="text-5xl md:text-7xl mb-6 serif-font">Fashion & Textile</h2>
+                    <p class="text-lg font-medium mb-8">
+                        Wearable art. Custom painted denim, embroidered patches, and conceptual fashion design sketches.
+                    </p>
+                    <button class="bg-black text-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition-colors border border-black uppercase tracking-widest text-sm" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Commission a Piece
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-12 scroll-mt-32">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-5xl mb-8 serif-font">Let's Create Together</h2>
+                <p class="text-lg mb-12 opacity-80">
+                    Interested in a custom clay piece, a mural for your cafe, or a unique illustration? Drop a message below.
+                </p>
+
+                <form class="glass-card p-8 rounded-3xl text-left space-y-6 shadow-lg" onsubmit="event.preventDefault(); alert('This is a demo form. To make this work on GitHub Pages, you can use a service like Formspree.io!');">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-wider mb-2">Name</label>
+                            <input type="text" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Your Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-wider mb-2">Email</label>
+                            <input type="email" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="email@example.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold uppercase tracking-wider mb-2">Service Interest</label>
+                        <select class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20">
+                            <option>Clay Product</option>
+                            <option>Wall Painting / Mural</option>
+                            <option>Illustration</option>
+                            <option>Fashion</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold uppercase tracking-wider mb-2">Message</label>
+                        <textarea rows="4" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Tell me about your idea..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-black text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-gray-900 transition-transform active:scale-95">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 opacity-60 text-sm">
+        <p class="serif-font text-lg mb-2">Jozart</p>
+        <p>&copy; 2025 Jozart. Designed with love.</p>
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="#" class="hover:text-black transition-colors"><i data-lucide="instagram"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i data-lucide="twitter"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i data-lucide="mail"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
