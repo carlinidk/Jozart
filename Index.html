@@ -73,13 +73,10 @@
 </head>
 <body class="custom-gradient antialiased selection:bg-pink-200 selection:text-black">
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 p-4" id="navbar">
         <div class="max-w-7xl mx-auto glass-card rounded-full px-6 py-3 flex justify-between items-center">
-            <!-- Brand Name with Scroll to Top -->
             <a href="#" class="text-2xl font-bold serif-font tracking-wide" onclick="window.scrollTo(0,0);">Jozart</a>
             
-            <!-- Desktop Menu (Anchor Links) -->
             <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
                 <a href="#clay" class="nav-link">Clay</a>
                 <a href="#paintings" class="nav-link">Paintings</a>
@@ -89,13 +86,11 @@
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
 
-            <!-- Mobile Menu Button -->
             <button id="menu-btn" class="md:hidden p-2 focus:outline-none">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden absolute top-20 left-4 right-4 glass-card rounded-2xl p-6 flex-col space-y-4 text-center md:hidden shadow-xl">
             <a href="#clay" class="mobile-link text-lg font-medium">Clay Products</a>
             <a href="#paintings" class="mobile-link text-lg font-medium">Wall Paintings</a>
@@ -106,7 +101,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-20">
         <div class="max-w-3xl space-y-6">
             <p class="uppercase tracking-[0.3em] text-sm font-semibold mb-4">Portfolio & Commission Work</p>
@@ -125,10 +119,8 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="max-w-7xl mx-auto px-4 py-12 space-y-32">
 
-        <!-- Clay Products Section -->
         <section id="clay" class="scroll-mt-32">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-4">
                 <div>
@@ -140,43 +132,107 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Item 1 -->
-                <div class="group cursor-pointer">
-                    <div class="aspect-square glass-card rounded-2xl overflow-hidden relative mb-4">
-                        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop" alt="Clay Ashtray" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    </div>
-                    <div class="flex justify-between items-baseline">
-                        <h3 class="text-xl font-medium serif-font">Floral Ashtray</h3>
-                        <span class="text-sm opacity-70">Custom Order</span>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="group cursor-pointer md:mt-12"> 
-                    <div class="aspect-[4/5] glass-card rounded-2xl overflow-hidden relative mb-4">
-                        <img src="https://images.unsplash.com/photo-1616261167554-820a6852620e?q=80&w=800&auto=format&fit=crop" alt="Trinket Holder" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    </div>
-                    <div class="flex justify-between items-baseline">
-                        <h3 class="text-xl font-medium serif-font">Cloud Trinket Dish</h3>
-                        <span class="text-sm opacity-70">Available</span>
+            <div class="overflow-x-auto pb-8 snap-x flex space-x-6 no-scrollbar">
+                
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-square overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop" alt="Floral Ashtray" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Floral Ashtray</h3>
+                            <span class="text-sm opacity-70">Custom Order</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Item 3 -->
-                <div class="group cursor-pointer">
-                    <div class="aspect-square glass-card rounded-2xl overflow-hidden relative mb-4">
-                        <img src="https://images.unsplash.com/photo-1515464397623-73b729f75d8d?q=80&w=800&auto=format&fit=crop" alt="Clay Bookmarks" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    </div>
-                    <div class="flex justify-between items-baseline">
-                        <h3 class="text-xl font-medium serif-font">Sculpted Bookmarks</h3>
-                        <span class="text-sm opacity-70">Set of 3</span>
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-[4/5] overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://images.unsplash.com/photo-1616261167554-820a6852620e?q=80&w=800&auto=format&fit=crop" alt="Cloud Trinket Holder" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Cloud Trinket Dish</h3>
+                            <span class="text-sm opacity-70">Available</span>
+                        </div>
                     </div>
                 </div>
+
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-square overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://images.unsplash.com/photo-1515464397623-73b729f75d8d?q=80&w=800&auto=format&fit=crop" alt="Clay Bookmarks" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Sculpted Bookmarks</h3>
+                            <span class="text-sm opacity-70">Set of 3</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-[4/5] overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://via.placeholder.com/800x1000?text=CLAY+ITEM+4" alt="New Clay Item" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">New Ashtray Design</h3>
+                            <span class="text-sm opacity-70">Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-square overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://via.placeholder.com/800x800?text=CLAY+ITEM+5" alt="New Clay Item" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Trinket Holder 2</h3>
+                            <span class="text-sm opacity-70">Custom Order</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-[4/5] overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://via.placeholder.com/800x1000?text=CLAY+ITEM+6" alt="New Clay Item" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Ashtray Commission</h3>
+                            <span class="text-sm opacity-70">Sold</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-square overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://via.placeholder.com/800x800?text=CLAY+ITEM+7" alt="New Clay Item" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="text-xl font-medium serif-font">Leaf Dish</h3>
+                            <span class="text-sm opacity-70">Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-72 md:w-80">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="aspect-[4/5] overflow-hidden relative mb-4 rounded-xl">
+                            <img src="https://via.placeholder.com/800x1000?text=CLAY+ITEM+8" class="w-full h-full object-cover rounded-xl mb-4" alt="New Clay Item">
+                        </div>
+                        <div class="flex justify-between items-baseline px-1 pt-1">
+                            <h3 class="font-bold text-lg serif-font">Custom Mug</h3>
+                            <p class="text-xs opacity-60 mt-1">One-off Piece</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Wall Paintings Section -->
         <section id="paintings" class="scroll-mt-32">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-6xl mb-4">Wall Paintings</h2>
@@ -184,12 +240,10 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Large Feature Image -->
                 <div class="glass-card p-2 rounded-3xl rotate-1 hover:rotate-0 transition-transform duration-500">
                     <img src="https://images.unsplash.com/photo-1577083288073-40892c0860a4?q=80&w=1000&auto=format&fit=crop" alt="Wall Painting" class="w-full h-[500px] object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
                 </div>
 
-                <!-- Murals Sub-Section -->
                 <div class="space-y-8" id="murals"> 
                     <div class="glass-card p-8 rounded-2xl">
                         <h3 class="text-2xl font-semibold mb-2 serif-font">Murals</h3>
@@ -209,7 +263,6 @@
             </div>
         </section>
 
-        <!-- Illustration Section -->
         <section id="illustration" class="scroll-mt-32">
             <div class="flex items-center space-x-4 mb-8">
                 <div class="h-px bg-black flex-grow opacity-20"></div>
@@ -217,9 +270,8 @@
                 <div class="h-px bg-black flex-grow opacity-20"></div>
             </div>
 
-            <!-- Horizontal Scrolling Gallery -->
             <div class="overflow-x-auto pb-8 snap-x flex space-x-6 no-scrollbar">
-                <!-- Card 1 -->
+                
                 <div class="snap-center shrink-0 w-80 md:w-96">
                     <div class="glass-card p-4 rounded-2xl">
                         <img src="https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Digital Illustration">
@@ -227,26 +279,58 @@
                         <p class="text-xs opacity-60 mt-1">Procreate / Photoshop</p>
                     </div>
                 </div>
-                 <!-- Card 2 -->
-                 <div class="snap-center shrink-0 w-80 md:w-96">
+                 
+                <div class="snap-center shrink-0 w-80 md:w-96">
                     <div class="glass-card p-4 rounded-2xl">
                         <img src="https://images.unsplash.com/photo-1622542734786-43c8c9e6f874?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Ink Sketch">
                         <h3 class="font-bold text-lg serif-font">Ink & Charcoal</h3>
                         <p class="text-xs opacity-60 mt-1">Traditional Media</p>
                     </div>
                 </div>
-                 <!-- Card 3 -->
-                 <div class="snap-center shrink-0 w-80 md:w-96">
+                 
+                <div class="snap-center shrink-0 w-80 md:w-96">
                     <div class="glass-card p-4 rounded-2xl">
                         <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=600&auto=format&fit=crop" class="w-full h-96 object-cover rounded-xl mb-4" alt="Watercolor">
                         <h3 class="font-bold text-lg serif-font">Watercolor Scenes</h3>
                         <p class="text-xs opacity-60 mt-1">Mixed Media</p>
                     </div>
                 </div>
+
+                <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://via.placeholder.com/600x900?text=ILLUSTRATION+4" class="w-full h-96 object-cover rounded-xl mb-4" alt="Abstract Lines">
+                        <h3 class="font-bold text-lg serif-font">Abstract Lines</h3>
+                        <p class="text-xs opacity-60 mt-1">Ink</p>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://via.placeholder.com/600x900?text=ILLUSTRATION+5" class="w-full h-96 object-cover rounded-xl mb-4" alt="Vector Art">
+                        <h3 class="font-bold text-lg serif-font">Vector Art</h3>
+                        <p class="text-xs opacity-60 mt-1">Illustrator</p>
+                    </div>
+                </div>
+                
+                <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://via.placeholder.com/600x900?text=ILLUSTRATION+6" class="w-full h-96 object-cover rounded-xl mb-4" alt="Comic Style">
+                        <h3 class="font-bold text-lg serif-font">Comic Style</h3>
+                        <p class="text-xs opacity-60 mt-1">Sequential</p>
+                    </div>
+                </div>
+
+                <div class="snap-center shrink-0 w-80 md:w-96">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <img src="https://via.placeholder.com/600x900?text=ILLUSTRATION+7" class="w-full h-96 object-cover rounded-xl mb-4" alt="Nature Sketch">
+                        <h3 class="font-bold text-lg serif-font">Nature Sketch</h3>
+                        <p class="text-xs opacity-60 mt-1">Pencil</p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Fashion Section -->
         <section id="fashion" class="scroll-mt-32">
             <div class="relative rounded-3xl overflow-hidden glass-card min-h-[60vh] flex items-center">
                 <div class="absolute inset-0 z-0">
@@ -265,7 +349,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-12 scroll-mt-32">
             <div class="max-w-3xl mx-auto text-center">
                 <h2 class="text-5xl mb-8 serif-font">Let's Create Together</h2>
@@ -273,12 +356,6 @@
                     Interested in a custom clay piece, a mural for your cafe, or a unique illustration? Drop a message below.
                 </p>
 
-                <!-- 
-                    IMPORTANT: 
-                    1. Go to https://formspree.io/
-                    2. Create a new form and get your unique URL (e.g., https://formspree.io/f/xmqzpwkb)
-                    3. Paste that URL inside the action="" quotes below.
-                -->
                 <form 
                     action="https://formspree.io/f/xqawkrky" 
                     method="POST" 
@@ -309,9 +386,6 @@
                         <textarea name="message" rows="4" required class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="Tell me about your idea..."></textarea>
                     </div>
                     
-                    <!-- Optional: Redirect to the home page after submission -->
-                    <!-- <input type="hidden" name="_next" value="https://yourusername.github.io/jozart-portfolio/"> -->
-
                     <button type="submit" class="w-full bg-black text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-gray-900 transition-transform active:scale-95">
                         Send Inquiry
                     </button>
@@ -366,5 +440,3 @@
     </script>
 </body>
 </html>
-
-
