@@ -16,6 +16,17 @@
     <title>Jozart | Art Store & Commissions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -79,12 +90,22 @@
             -ms-overflow-style: none; 
             scrollbar-width: none; 
         }
+
+        /* Pulsing animation for loading */
+        .loading-pulse {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body class="custom-gradient antialiased selection:bg-pink-200 selection:text-black">
 
     <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 p-4" id="navbar">
         <div class="max-w-7xl mx-auto glass-card rounded-full px-6 py-3 flex justify-between items-center">
+            <!-- Nav Logo -->
             <a href="#" class="text-2xl font-bold serif-font tracking-wide" onclick="window.scrollTo(0,0);">Jozart</a>
             
             <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
@@ -113,10 +134,28 @@
 
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-20">
         <div class="max-w-3xl space-y-6">
+            
+            <!-- 1. Portfolio Text (Moved Top) -->
             <p class="uppercase tracking-[0.3em] text-sm font-semibold mb-4">Portfolio & Commission Work</p>
-            <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 serif-font">
+            
+            <!-- 2. 3D Model Container (Inserted Middle) -->
+            <div 
+                id="three-logo-container" 
+                class="w-40 h-32 mx-auto cursor-pointer relative z-10"
+                title="Double-click/tap to show/hide the Commission Sparker"
+            >
+                <!-- Three.js Canvas will be injected here -->
+            </div>
+
+            <!-- 3. Jozart Title (Moved Bottom) -->
+            <h1 
+                id="main-logo-text"
+                class="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 serif-font cursor-pointer select-none"
+                title="Double-click/tap to show/hide the Commission Sparker"
+            >
                 Jozart
             </h1>
+            
             <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
                 Creating art that <span class="italic font-normal serif-font">breathes</span> color. <br>
                 Clay trinkets, bespoke murals, illustrations, and fashion.
@@ -130,6 +169,60 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-12 space-y-32">
+        
+        <!-- START: GEMINI API FEATURE - Commission Idea Sparker (Hidden by default) -->
+        <section id="sparker-section-container" class="scroll-mt-24">
+            <div 
+                id="sparker-section" 
+                class="glass-card p-8 rounded-3xl text-left space-y-6 shadow-lg mb-12 hidden transition-all duration-300 ease-in-out"
+            >
+                <h3 class="text-3xl font-semibold mb-4 serif-font text-center">✨ Commission Idea Sparker + Visualizer</h3>
+                <p class="text-center mb-6 opacity-80">
+                    Need help defining your dream art piece? Tell us a concept, and our AI will generate a creative pitch and a visual mockup!
+                </p>
+
+                <div>
+                    <label class="block text-sm font-bold uppercase tracking-wider mb-2">Art Category</label>
+                    <select id="ai-service-select" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20">
+                        <option value="Clay Product">Clay Product (Small Sculpture)</option>
+                        <option value="Wall Painting / Mural">Wall Painting / Mural</option>
+                        <option value="Illustration">Illustration (Digital/Watercolor)</option>
+                        <option value="Fashion">Fashion (Up-cycled Clothing)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold uppercase tracking-wider mb-2">Vague Concept or Theme (e.g., "cosmic animals" or "1950s neon")</label>
+                    <textarea id="ai-concept-input" rows="2" class="w-full bg-white/50 border border-white/60 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black/20" placeholder="A theme, mood, or vague idea..."></textarea>
+                </div>
+
+                <button id="spark-idea-btn" class="w-full bg-pink-500 text-white font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-pink-600 transition-transform active:scale-95">
+                    ✨ Spark Commission Idea
+                </button>
+                
+                <div id="ai-output-container" class="mt-6 hidden bg-white/60 p-4 rounded-xl border border-white/80">
+                    <div id="ai-loading-indicator" class="text-center loading-pulse text-black/80 font-medium py-4 hidden">
+                        <!-- Loading status will be updated via JS -->
+                    </div>
+                    
+                    <div id="ai-image-wrapper" class="hidden my-4">
+                        <img id="ai-generated-image" class="w-full max-h-[500px] object-contain rounded-xl shadow-xl border-2 border-white/80" alt="AI Generated Concept Visualization">
+                        <p class="text-center text-xs opacity-70 mt-2">Visualization of the concept.</p>
+                    </div>
+
+                    <div id="ai-result-content">
+                        <!-- AI generated text content goes here -->
+                    </div>
+
+                    <div id="ai-citations" class="mt-4 text-xs opacity-70 italic hidden border-t border-black/10 pt-2">
+                        <p class="font-bold">Sources:</p>
+                        <ul id="ai-sources-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: GEMINI API FEATURE -->
+
 
         <section id="clay" class="scroll-mt-32">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-4">
@@ -414,9 +507,371 @@
         </div>
     </footer>
 
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        // --- 3D Logo Setup ---
+        function initThreeLogo() {
+            const container = document.getElementById('three-logo-container');
+            if (!container) return;
+
+            // Scene setup
+            const scene = new THREE.Scene();
+            
+            // Camera setup
+            const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer setup (alpha: true for transparency)
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Lighting (for the 3D form)
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+            directionalLight.position.set(2, 2, 5);
+            scene.add(directionalLight);
+
+            // Load the GLB Model
+            const loader = new GLTFLoader();
+            let model;
+
+            // !! IMPORTANT: Replace 'ImageToStl.com_.glb' with the actual path to your GLB file !!
+            loader.load('ImageToStl.com_.glb', (gltf) => {
+                model = gltf.scene;
+                
+                // --- APPLY BLACK TEXTURE/MATERIAL ---
+                const blackMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x111111, // Almost black
+                    roughness: 0.6,
+                    metalness: 0.2
+                });
+
+                model.traverse((node) => {
+                    if (node.isMesh) {
+                        node.material = blackMaterial;
+                    }
+                });
+
+                // Center the model
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                model.position.sub(center);
+                
+                scene.add(model);
+
+            }, undefined, (error) => {
+                console.error('An error occurred loading the GLB model:', error);
+                // Fallback text if model fails to load
+                container.innerHTML = '<div class="flex items-center justify-center h-full text-xs opacity-50">Logo Loading...</div>';
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                if (model) {
+                    model.rotation.y += 0.01; // Rotation speed
+                }
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+
+            // --- WIRE UP DOUBLE TAP FOR 3D CONTAINER ---
+            
+            let lastClickTime = 0;
+            const DURATION_THRESHOLD = 350;
+
+            renderer.domElement.addEventListener('click', (event) => {
+                const now = new Date().getTime();
+                const timeDiff = now - lastClickTime;
+
+                if (timeDiff < DURATION_THRESHOLD && timeDiff > 0) {
+                    // Double click detected
+                    event.preventDefault();
+                    // Call the global toggle function if available
+                    if (window.toggleSparkerGlobal) {
+                        window.toggleSparkerGlobal();
+                    }
+                    lastClickTime = 0;
+                } else {
+                    lastClickTime = now;
+                }
+            });
+        }
+
+        // Initialize once DOM is ready
+        initThreeLogo();
+    </script>
+
     <script>
         // Initialize Icons
         lucide.createIcons();
+
+        // Gemini API configuration
+        const apiKey = "";
+        const textApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
+        const imageApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict";
+        const MAX_RETRIES = 5;
+
+        // UI Element references
+        const conceptInput = document.getElementById('ai-concept-input');
+        const serviceSelect = document.getElementById('ai-service-select');
+        const outputContainer = document.getElementById('ai-output-container');
+        const loadingIndicator = document.getElementById('ai-loading-indicator');
+        const resultContent = document.getElementById('ai-result-content');
+        const citationsContainer = document.getElementById('ai-citations');
+        const citationsList = document.getElementById('ai-sources-list');
+        const sparkButton = document.getElementById('spark-idea-btn');
+        const imageWrapper = document.getElementById('ai-image-wrapper');
+        const generatedImage = document.getElementById('ai-generated-image');
+        const mainLogoText = document.getElementById('main-logo-text');
+        const sparkerSection = document.getElementById('sparker-section');
+
+
+        // --- Utility Functions ---
+
+        /**
+         * Generic fetch wrapper with exponential backoff.
+         */
+        async function fetchWithRetry(url, options, retries = 0) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429 || response.status >= 500) {
+                        throw new Error(`Retryable HTTP error! status: ${response.status}`);
+                    }
+                    throw new Error(`Non-retryable HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                if (retries < MAX_RETRIES && error.message.includes("Retryable")) {
+                    const delay = Math.pow(2, retries) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries + 1);
+                } else {
+                    console.error("API request failed after multiple retries or due to critical error:", error);
+                    throw new Error("Failed to connect to the generative service.");
+                }
+            }
+        }
+
+        /**
+         * Cleans up raw text generated by the LLM and formats it for display.
+         */
+        function formatTextOutput(text) {
+             return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                .replace(/^(#+)\s*(.*)/gm, (match, hashes, content) => { // Headings (h3 and h4 used for hierarchy)
+                    const level = hashes.length > 2 ? 4 : 3;
+                    return `<h${level} class="serif-font font-semibold mt-4 mb-2">${content}</h${level}>`;
+                })
+                .replace(/\n\n/g, '</p><p>') // Double newline to paragraph breaks
+                .replace(/\n/g, '<br>'); // Single newline to line break
+        }
+
+        /**
+         * Extracts the citation sources and updates the UI.
+         */
+        function handleCitations(candidate) {
+            citationsList.innerHTML = '';
+            citationsContainer.classList.add('hidden');
+
+            const groundingMetadata = candidate.groundingMetadata;
+            if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                const sources = groundingMetadata.groundingAttributions
+                    .map(attribution => ({
+                        uri: attribution.web?.uri,
+                        title: attribution.web?.title,
+                    }))
+                    .filter(source => source.uri && source.title);
+                
+                if (sources.length > 0) {
+                    sources.forEach(source => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="${source.uri}" target="_blank" class="hover:underline">${source.title}</a>`;
+                        citationsList.appendChild(li);
+                    });
+                    citationsContainer.classList.remove('hidden');
+                }
+            }
+        }
+
+
+        // --- Core LLM Logic ---
+
+        async function sparkIdea() {
+            const concept = conceptInput.value.trim();
+            const service = serviceSelect.value;
+            
+            // 1. Initial Validation
+            if (concept.length < 5) {
+                resultContent.innerHTML = '<p class="text-red-600 text-sm text-center">Please enter a more descriptive concept (e.g., "cosmic animals").</p>';
+                outputContainer.classList.remove('hidden');
+                citationsContainer.classList.add('hidden');
+                imageWrapper.classList.add('hidden');
+                return;
+            }
+
+            // 2. Reset UI and Start Loading
+            resultContent.innerHTML = '';
+            generatedImage.src = '';
+            imageWrapper.classList.add('hidden');
+            citationsList.innerHTML = '';
+            citationsContainer.classList.add('hidden');
+            outputContainer.classList.remove('hidden');
+            loadingIndicator.classList.remove('hidden');
+            sparkButton.disabled = true;
+
+            let generatedText = "";
+
+            try {
+                // --- Step 1: Generate Text Proposal (Creative Concept) ---
+                loadingIndicator.innerHTML = 'Step 1/2: Generating Creative Proposal...';
+
+                const systemPrompt = `You are a world-class, imaginative art director working for the artist Jozart. Your goal is to take a user's vague concept and a specific art service, and generate a highly creative, detailed commission proposal. The proposal should be structured with a Title, Concept, and Execution details. Keep the tone inspiring and professional.`;
+
+                const userQuery = `The client is commissioning a "${service}" piece. Their core concept/theme is: "${concept}". Generate a detailed commission proposal that includes a creative title, a short concept description, and technical execution details (like suggested materials, dominant colors, or style elements). Format the output using markdown for readability.`;
+
+                const textPayload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    tools: [{ "google_search": {} }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const textResponseJson = await fetchWithRetry(`${textApiUrl}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(textPayload)
+                });
+
+                const textCandidate = textResponseJson.candidates?.[0];
+                if (!textCandidate || !textCandidate.content?.parts?.[0]?.text) {
+                    throw new Error("Failed to generate a text proposal.");
+                }
+
+                generatedText = textCandidate.content.parts[0].text;
+                resultContent.innerHTML = `<div class="text-sm space-y-2 leading-relaxed p-2">${formatTextOutput(generatedText)}</div>`;
+                handleCitations(textCandidate);
+                
+                // --- Step 2: Generate Image Visualization ---
+                loadingIndicator.innerHTML = 'Step 2/2: Visualizing the Concept (This may take a moment)...';
+
+                // We use the generated text as the basis for the image prompt
+                const imagePrompt = `A high-quality visual mockup for an art commission: ${generatedText}. The style should be vibrant, artistic, and suitable for the category: ${service}.`;
+
+                const imagePayload = { 
+                    instances: { prompt: imagePrompt }, 
+                    parameters: { "sampleCount": 1 } 
+                };
+
+                const imageResponseJson = await fetchWithRetry(`${imageApiUrl}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(imagePayload)
+                });
+                
+                if (imageResponseJson.predictions && imageResponseJson.predictions.length > 0 && imageResponseJson.predictions[0].bytesBase64Encoded) {
+                    const base64Data = imageResponseJson.predictions[0].bytesBase64Encoded;
+                    generatedImage.src = `data:image/png;base64,${base64Data}`;
+                    imageWrapper.classList.remove('hidden');
+                } else {
+                    console.error("Image generation failed:", imageResponseJson);
+                    // Do not show an error, just skip the image display.
+                }
+
+            } catch (error) {
+                console.error("Commission Sparker Error:", error);
+                resultContent.innerHTML = `<p class="text-red-600 text-sm text-center">Error: ${error.message}</p>`;
+                imageWrapper.classList.add('hidden');
+            } finally {
+                // 3. Finalize UI
+                loadingIndicator.classList.add('hidden');
+                sparkButton.disabled = false;
+                sparkButton.textContent = '✨ Spark Commission Idea';
+                // Ensure output container is visible even if only text or image loaded
+                if (generatedText || generatedImage.src) {
+                    outputContainer.classList.remove('hidden');
+                } else {
+                    outputContainer.classList.add('hidden');
+                }
+            }
+        }
+        
+        // --- Event Listeners and General JS ---
+
+        // Expose toggle function globally for the module script to use
+        window.toggleSparkerGlobal = function() {
+            if (sparkerSection) {
+                if (sparkerSection.classList.contains('hidden')) {
+                    // SHOW
+                    sparkerSection.classList.remove('hidden');
+                    sparkerSection.classList.remove('opacity-100', 'scale-100');
+                    sparkerSection.classList.add('opacity-0', 'scale-90');
+
+                    requestAnimationFrame(() => {
+                        sparkerSection.classList.remove('opacity-0', 'scale-90');
+                        sparkerSection.classList.add('opacity-100', 'scale-100');
+                        
+                        const sparkerContainer = document.getElementById('sparker-section-container');
+                        if (sparkerContainer) {
+                            sparkerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                } else {
+                    // HIDE
+                    sparkerSection.classList.remove('opacity-100', 'scale-100');
+                    sparkerSection.classList.add('opacity-0', 'scale-90');
+                    
+                    setTimeout(() => {
+                        sparkerSection.classList.add('hidden');
+                        sparkerSection.classList.remove('opacity-0', 'scale-90'); 
+                    }, 300); 
+                }
+            }
+        }
+
+        // Reusable Double-Tap Logic for non-canvas elements
+        function addDoubleTapListener(element, callback) {
+            let lastClickTime = 0;
+            const DURATION_THRESHOLD = 350; // ms to register a double-click/tap
+
+            if (element) {
+                element.addEventListener('click', (event) => {
+                    const now = new Date().getTime();
+                    const timeDiff = now - lastClickTime;
+
+                    if (timeDiff < DURATION_THRESHOLD && timeDiff > 0) {
+                        // Double-click/tap detected
+                        event.preventDefault(); 
+                        callback();
+                        lastClickTime = 0; // Reset for next double click
+                    } else {
+                        // First click/tap
+                        lastClickTime = now;
+                    }
+                });
+            }
+        }
+
+        // Apply Double-Tap to Text (Image is handled in Module Script now)
+        addDoubleTapListener(mainLogoText, window.toggleSparkerGlobal);
+
 
         // Mobile Menu Toggle
         const menuBtn = document.getElementById('menu-btn');
@@ -444,6 +899,13 @@
             } else {
                 navbar.classList.add('py-4');
                 navbar.classList.remove('py-2');
+            }
+        });
+
+        // LLM Feature Listener
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sparkButton) {
+                sparkButton.addEventListener('click', sparkIdea);
             }
         });
     </script>
