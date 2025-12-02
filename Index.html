@@ -16,17 +16,6 @@
     <title>Jozart | Art Store & Commissions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Three.js Import Map -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 
@@ -134,20 +123,9 @@
 
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-20">
         <div class="max-w-3xl space-y-6">
-            
-            <!-- 1. Portfolio Text (Moved Top) -->
-            <p class="uppercase tracking-[0.3em] text-sm font-semibold mb-4">Portfolio & Commission Work</p>
-            
-            <!-- 2. 3D Model Container (Inserted Middle) -->
-            <div 
-                id="three-logo-container" 
-                class="w-40 h-32 mx-auto cursor-pointer relative z-10"
-                title="Double-click/tap to show/hide the Commission Sparker"
-            >
-                <!-- Three.js Canvas will be injected here -->
-            </div>
+            <!-- Removed GIF Logo -->
 
-            <!-- 3. Jozart Title (Moved Bottom) -->
+            <p class="uppercase tracking-[0.3em] text-sm font-semibold mb-4">Portfolio & Commission Work</p>
             <h1 
                 id="main-logo-text"
                 class="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight mb-6 serif-font cursor-pointer select-none"
@@ -155,7 +133,6 @@
             >
                 Jozart
             </h1>
-            
             <p class="text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
                 Creating art that <span class="italic font-normal serif-font">breathes</span> color. <br>
                 Clay trinkets, bespoke murals, illustrations, and fashion.
@@ -507,124 +484,6 @@
         </div>
     </footer>
 
-    <script type="module">
-    import * as THREE from 'three';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-    // --- 3D Logo Setup ---
-    function initThreeLogo() {
-        const container = document.getElementById('three-logo-container');
-        if (!container) return;
-
-        // Scene setup
-        const scene = new THREE.Scene();
-        
-        // Camera setup
-        const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-        // FIX 1: Adjust camera position to be closer and slightly above/forward
-        camera.position.set(0, 0, 7); // Changed from z=5 to z=7 for better perspective
-        camera.lookAt(0, 0, 0);
-
-        // Renderer setup (alpha: true for transparency)
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
-
-        // Lighting (for the 3D form)
-        // FIX 2: Increased intensity of lighting for better visibility
-        const ambientLight = new THREE.AmbientLight(0xffffff, 2.5); // Increased intensity from 1.5 to 2.5
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 3); // Increased intensity from 2 to 3
-        directionalLight.position.set(2, 5, 10); // Changed Z position to be more forward
-        scene.add(directionalLight);
-
-        // Load the GLB Model
-        const loader = new GLTFLoader();
-        let model;
-
-        // !! IMPORTANT: Replace 'ImageToStl.com_.glb' with the actual path to your GLB file !!
-        loader.load('ImageToStl.com_.glb', (gltf) => {
-            model = gltf.scene;
-            
-            // --- APPLY BRIGHTER TEXTURE/MATERIAL ---
-            // FIX 3: Brightened the material color to stand out against the text.
-            const modelMaterial = new THREE.MeshStandardMaterial({
-                color: 0x444444, // Changed from 0x111111 (almost black) to 0x444444 (dark gray)
-                roughness: 0.4, // Reduced roughness for a slightly shinier look
-                metalness: 0.5 // Increased metalness slightly
-            });
-
-            model.traverse((node) => {
-                if (node.isMesh) {
-                    node.material = modelMaterial;
-                }
-            });
-
-            // Center the model
-            const box = new THREE.Box3().setFromObject(model);
-            const center = box.getCenter(new THREE.Vector3());
-            model.position.sub(center);
-            
-            // FIX 4: Add a small vertical offset to center the model better in the container
-            model.position.y += 0.5;
-
-            scene.add(model);
-
-        }, undefined, (error) => {
-            console.error('An error occurred loading the GLB model:', error);
-            // Fallback text if model fails to load
-            container.innerHTML = '<div class="flex items-center justify-center h-full text-xs opacity-50">Logo Loading...</div>';
-        });
-
-        // Animation Loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            if (model) {
-                model.rotation.y += 0.01; // Rotation speed
-            }
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle Resize
-        window.addEventListener('resize', () => {
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            renderer.setSize(width, height);
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-        });
-
-        // --- WIRE UP DOUBLE TAP FOR 3D CONTAINER ---
-        
-        let lastClickTime = 0;
-        const DURATION_THRESHOLD = 350;
-
-        renderer.domElement.addEventListener('click', (event) => {
-            const now = new Date().getTime();
-            const timeDiff = now - lastClickTime;
-
-            if (timeDiff < DURATION_THRESHOLD && timeDiff > 0) {
-                // Double click detected
-                event.preventDefault();
-                // Call the global toggle function if available
-                if (window.toggleSparkerGlobal) {
-                    window.toggleSparkerGlobal();
-                }
-                lastClickTime = 0;
-            } else {
-                lastClickTime = now;
-            }
-        });
-    }
-
-    // Initialize once DOM is ready
-    initThreeLogo();
-    </script>
     <script>
         // Initialize Icons
         lucide.createIcons();
@@ -646,7 +505,7 @@
         const sparkButton = document.getElementById('spark-idea-btn');
         const imageWrapper = document.getElementById('ai-image-wrapper');
         const generatedImage = document.getElementById('ai-generated-image');
-        const mainLogoText = document.getElementById('main-logo-text');
+        const mainLogo = document.getElementById('main-logo-text');
         const sparkerSection = document.getElementById('sparker-section');
 
 
@@ -821,62 +680,58 @@
         
         // --- Event Listeners and General JS ---
 
-        // Expose toggle function globally for the module script to use
-        window.toggleSparkerGlobal = function() {
-            if (sparkerSection) {
-                if (sparkerSection.classList.contains('hidden')) {
-                    // SHOW
-                    sparkerSection.classList.remove('hidden');
-                    sparkerSection.classList.remove('opacity-100', 'scale-100');
-                    sparkerSection.classList.add('opacity-0', 'scale-90');
+        // Double-Click/Tap to Toggle Sparker Section
+        let lastClickTime = 0;
+        const DURATION_THRESHOLD = 350; // ms to register a double-click/tap
 
-                    requestAnimationFrame(() => {
-                        sparkerSection.classList.remove('opacity-0', 'scale-90');
-                        sparkerSection.classList.add('opacity-100', 'scale-100');
-                        
-                        const sparkerContainer = document.getElementById('sparker-section-container');
-                        if (sparkerContainer) {
-                            sparkerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    });
-                } else {
-                    // HIDE
-                    sparkerSection.classList.remove('opacity-100', 'scale-100');
-                    sparkerSection.classList.add('opacity-0', 'scale-90');
+        if (mainLogo) {
+            mainLogo.addEventListener('click', (event) => {
+                const now = new Date().getTime();
+                const timeDiff = now - lastClickTime;
+
+                if (timeDiff < DURATION_THRESHOLD && timeDiff > 0) {
+                    // Double-click/tap detected
+                    event.preventDefault(); 
                     
-                    setTimeout(() => {
-                        sparkerSection.classList.add('hidden');
-                        sparkerSection.classList.remove('opacity-0', 'scale-90'); 
-                    }, 300); 
-                }
-            }
-        }
+                    if (sparkerSection) {
+                        if (sparkerSection.classList.contains('hidden')) {
+                            // SHOW: Remove hidden, set initial state, then transition to final state
+                            sparkerSection.classList.remove('hidden');
+                            sparkerSection.classList.remove('opacity-100', 'scale-100');
+                            sparkerSection.classList.add('opacity-0', 'scale-90');
 
-        // Reusable Double-Tap Logic for non-canvas elements
-        function addDoubleTapListener(element, callback) {
-            let lastClickTime = 0;
-            const DURATION_THRESHOLD = 350; // ms to register a double-click/tap
-
-            if (element) {
-                element.addEventListener('click', (event) => {
-                    const now = new Date().getTime();
-                    const timeDiff = now - lastClickTime;
-
-                    if (timeDiff < DURATION_THRESHOLD && timeDiff > 0) {
-                        // Double-click/tap detected
-                        event.preventDefault(); 
-                        callback();
-                        lastClickTime = 0; // Reset for next double click
-                    } else {
-                        // First click/tap
-                        lastClickTime = now;
+                            // Allow DOM to process 'hidden' removal before starting transition
+                            requestAnimationFrame(() => {
+                                sparkerSection.classList.remove('opacity-0', 'scale-90');
+                                sparkerSection.classList.add('opacity-100', 'scale-100');
+                                
+                                // Scroll to the section only when revealed
+                                const sparkerContainer = document.getElementById('sparker-section-container');
+                                if (sparkerContainer) {
+                                    sparkerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            });
+                            
+                        } else {
+                            // HIDE: Transition to initial state, then add hidden
+                            sparkerSection.classList.remove('opacity-100', 'scale-100');
+                            sparkerSection.classList.add('opacity-0', 'scale-90');
+                            
+                            // Hide it completely after transition (duration is 300ms, matching the Tailwind transition)
+                            setTimeout(() => {
+                                sparkerSection.classList.add('hidden');
+                                // Clean up transition classes for the next 'show'
+                                sparkerSection.classList.remove('opacity-0', 'scale-90'); 
+                            }, 300); 
+                        }
                     }
-                });
-            }
+                    lastClickTime = 0; // Reset for next double click
+                } else {
+                    // First click/tap
+                    lastClickTime = now;
+                }
+            });
         }
-
-        // Apply Double-Tap to Text (Image is handled in Module Script now)
-        addDoubleTapListener(mainLogoText, window.toggleSparkerGlobal);
 
 
         // Mobile Menu Toggle
